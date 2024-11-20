@@ -5,8 +5,7 @@ bool requestPermission() {
 	try {
 		auto proxy = sdbus::createProxy(
 			sdbus::createSessionBusConnection(),
-			sdbus::ServiceName{ "com.system.permissions" }, sdbus::ObjectPath{ "/" }
-		);
+			sdbus::ServiceName{ "com.system.permissions" }, sdbus::ObjectPath{ "/" });
 
 		// Пытаемся запросить разрешение SystemTime у com.system.permissions
 		proxy->callMethod("RequestPermission")

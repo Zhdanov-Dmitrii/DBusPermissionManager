@@ -7,7 +7,7 @@
 
 class PermissionsDatabase {
 public:
-	PermissionsDatabase();
+	PermissionsDatabase() = default;
 	bool initialize(const std::string& dbPath);
 	bool isValid() const;
 

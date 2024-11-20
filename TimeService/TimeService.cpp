@@ -3,7 +3,7 @@
 #include <iostream>
 
 TimeService::TimeService(sdbus::IConnection& connection)
-	: object_(sdbus::createObject(connection, sdbus::ObjectPath{ "/" }) ) {
+	: object_{ sdbus::createObject(connection, sdbus::ObjectPath{"/"}) } {
 	object_
 		->addVTable(sdbus::MethodVTableItem{ sdbus::MethodName{"GetSystemTime"},
 											{},
@@ -13,8 +13,8 @@ TimeService::TimeService(sdbus::IConnection& connection)
 											[this](sdbus::MethodCall call) {
 											  return getSystemTime(
 												  std::move(call));
-											} }
-		).forInterface("com.system.time");
+											} })
+		.forInterface("com.system.time");
 }
 
 std::string TimeService::getExecutablePath(const std::string& dbusName) {

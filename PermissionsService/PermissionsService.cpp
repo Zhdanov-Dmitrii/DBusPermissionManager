@@ -3,26 +3,27 @@
 #include <sdbus-c++/Error.h>
 
 PermissionsService::PermissionsService(sdbus::IConnection& connection)
-	: object_(sdbus::createObject(connection, sdbus::ObjectPath{ "/" })) {
-	object_->addVTable(
-		sdbus::MethodVTableItem{ sdbus::MethodName{"RequestPermission"},
-								sdbus::Signature{"i"},
-								{"permissionEnumCode"},
-								{},
-								{},
-								[this](sdbus::MethodCall call) {
-								  requestPermission(std::move(call));
-								} },
+	: object_{ sdbus::createObject(connection, sdbus::ObjectPath{"/"}) } {
+	object_
+		->addVTable(
+			sdbus::MethodVTableItem{ sdbus::MethodName{"RequestPermission"},
+									sdbus::Signature{"i"},
+									{"permissionEnumCode"},
+									{},
+									{},
+									[this](sdbus::MethodCall call) {
+									  requestPermission(std::move(call));
+									} },
 
-		sdbus::MethodVTableItem{
-			sdbus::MethodName{"CheckApplicationHasPermission"},
-			sdbus::Signature{"si"},
-			{"applicationExecPath", "permissionEnumCode"},
-			sdbus::Signature{"b"},
-			{"checkApplicationHasPermission"},
-			[this](sdbus::MethodCall call) {
-			  return checkApplicationHasPermission(std::move(call));
-			} })
+			sdbus::MethodVTableItem{
+				sdbus::MethodName{"CheckApplicationHasPermission"},
+				sdbus::Signature{"si"},
+				{"applicationExecPath", "permissionEnumCode"},
+				sdbus::Signature{"b"},
+				{"checkApplicationHasPermission"},
+				[this](sdbus::MethodCall call) {
+				  return checkApplicationHasPermission(std::move(call));
+				} })
 		.forInterface("com.system.permissions");
 }
 
@@ -77,6 +78,7 @@ void PermissionsService::requestPermission(sdbus::MethodCall call) {
 		error.send();
 		return;
 	}
+	call.createReply().send();
 }
 
 bool PermissionsService::checkApplicationHasPermission(sdbus::MethodCall call) {

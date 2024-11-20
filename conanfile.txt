@@ -1,0 +1,7 @@
+[requires]
+sdbus-cpp/2.0.0
+sqlite3/3.46.1
+
+[generators]
+CMakeDeps
+CMakeToolchain
